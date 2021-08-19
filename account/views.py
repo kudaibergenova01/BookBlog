@@ -21,7 +21,7 @@ class ActivationView(APIView):
         user = MyUser.objects.filter(email=email,
                                      activation_code=activation_code).first()
         if not user:
-            return Response('This user does not exist', 400)
+            return Response("Your account successfully activated", 400)
         user.activation_code = ''
         user.is_active = True
         user.save()
