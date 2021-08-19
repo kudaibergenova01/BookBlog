@@ -21,13 +21,14 @@ class ActivationView(APIView):
         user = MyUser.objects.filter(email=email,
                                      activation_code=activation_code).first()
         if not user:
-            return Response("Your account successfully activated", 400)
+            return Response('This user does not exist', 400)
         user.activation_code = ''
         user.is_active = True
         user.save()
         return Response("Your account successfully activated", 200)
 
 
+# /v1/api/account/forgot_password/?email=kudaibergenovab01@gmail.com
 class ForgotPasswordView(APIView):
     def get(self, request):
         email = request.query_params.get('email')

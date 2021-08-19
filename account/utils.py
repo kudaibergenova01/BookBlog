@@ -24,7 +24,7 @@ def send_activation_code(email, activate_code, status):
     elif status == 'reset_password':
         send_mail(
             'Reset Your password',
-            f'Ков активации: {activate_code}',
+            f'Код активации: {activate_code}',
             'bookblog_admin@gmail.com',
             [email, ],
             fail_silently=False

@@ -37,3 +37,11 @@ class Comment(models.Model):
 
     class Meta:
         ordering = ('created',)
+
+
+class Like(models.Model):
+    user = models.ForeignKey(MyUser, on_delete=models.CASCADE, related_name='likes')
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='likes')
+
+    def str(self):
+        return f"{self.user} -- {self.post}"
