@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from rest_framework.decorators import action
 
-from .models import Category, Post, PostImage, Comment, Like
+from .models import Category, Post, PostImage, Comment, Like, Rating
 
 
 class ImageSerializer(serializers.ModelSerializer):
@@ -93,3 +93,23 @@ class LikeSerializer(serializers.ModelSerializer):
 
         like = Like.objects.create(user=user, **validated_data)
         return like
+
+
+class RatingSerializer(serializers.ModelSerializer):
+    author = serializers.ReadOnlyField(source='author.email')
+
+    class Meta:
+        model = Rating
+        fields = '__all__'
+
+    def create(self, validated_data):
+        request = self.context.get('request')
+        email = request.user
+        post = validated_data.get('product')
+
+        if Rating.objects.filter(author=email, post=post):
+            rating = Rating.objects.get(author=email, post=post)
+            return rating
+
+        rating = Rating.objects.create(author=request.user, **validated_data)
+        return rating

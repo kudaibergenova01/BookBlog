@@ -18,7 +18,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from main.views import CategoryViewSet, PostViewSet, CommentViewSet, LikeViewSet
+from main.views import CategoryViewSet, PostViewSet, CommentViewSet, LikeViewSet, AddStarRatingView
 
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
@@ -41,6 +41,7 @@ router = DefaultRouter()
 router.register('posts', PostViewSet)
 router.register('categories', CategoryViewSet)
 router.register('comments', CommentViewSet)
+router.register('rating', AddStarRatingView)
 router.register('likes', LikeViewSet)
 router.register('favorites', LikeViewSet)
 

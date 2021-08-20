@@ -45,3 +45,30 @@ class Like(models.Model):
 
     def str(self):
         return f"{self.user} -- {self.post}"
+
+
+class RatingStar(models.Model):
+    """Звезда рейтинга"""
+    value = models.SmallIntegerField("Значение", default=0)
+
+    def str(self):
+        return f'{self.value}'
+
+    class Meta:
+        verbose_name = "Rating Star"
+        verbose_name_plural = "Rating Stars"
+        ordering = ["-value"]
+
+
+class Rating(models.Model):
+    star = models.ForeignKey(RatingStar, on_delete=models.CASCADE, verbose_name='Звезда', related_name='ratings')
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, verbose_name='Продукт', related_name='ratings')
+    author = models.ForeignKey(MyUser, on_delete=models.CASCADE, related_name='ratings')
+    created = models.DateTimeField(auto_now_add=True)
+
+    def str(self):
+        return f"{self.star} - {self.post}"
+
+    class Meta:
+        verbose_name = "Rating"
+        verbose_name_plural = "Ratings"

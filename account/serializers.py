@@ -65,3 +65,5 @@ class CreateNewPasswordSerializer(serializers.Serializer):
         user.set_password(password)
         user.save()
         return user
+
+
